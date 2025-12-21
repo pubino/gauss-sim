@@ -1,5 +1,7 @@
 # Gaussian Elimination Simulator
 
+Part of [Vanderbei's Java Simulations](https://github.com/pubino/vanderbei-apps) collection.
+
 An interactive Java application for learning and practicing Gaussian elimination. Originally by Professor Robert Vanderbei, Princeton University (1997).
 
 ## Overview
