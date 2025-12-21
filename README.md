@@ -1,6 +1,6 @@
 # Gaussian Elimination Simulator
 
-An interactive Java application for learning and practicing Gaussian elimination. Originally developed by Robert Vanderbei at Princeton University (1997).
+An interactive Java application for learning and practicing Gaussian elimination. Originally by Professor Robert Vanderbei, Princeton University (1997).
 
 ## Overview
 
