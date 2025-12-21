@@ -37,7 +37,6 @@ MAIN_CLASS := gauss.GaussElim
 # Source files
 SOURCES := \
 	gauss/GaussElim.java \
-	myutil/AppletFrame.java \
 	myutil/GridPanel.java \
 	myutil/NumberField.java \
 	myutil/Format.java
