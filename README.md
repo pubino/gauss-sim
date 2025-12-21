@@ -110,8 +110,3 @@ Gaussian elimination transforms a system Ax = b into row echelon form:
 - **Pink cells**: Diagonal elements (pivot positions)
 - **Variable buttons** (x1, x2, ...): Click to perform row operations
 - **Checkboxes**: Select rows for swapping
-
-## License
-
-Copyright 1997, Princeton University.
-Based on original work by Robert Vanderbei.
