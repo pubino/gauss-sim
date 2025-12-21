@@ -1,119 +1,95 @@
 package gauss;
 
 import java.awt.*;
-import java.applet.*;
-import java.awt.image.*;
+import java.awt.event.*;
 import java.util.*;
-import java.lang.String;
 
 import myutil.*;
 
-public class GaussElim extends Applet
+public class GaussElim extends Frame
 {
-	PivotFrame pf;
-	TextField M = new TextField("3");
-	TextField N = new TextField("3");
-	int m, n;
+	TextField M = new TextField("3", 3);
+	TextField N = new TextField("3", 3);
+	int m = 3, n = 3;
 
-        public static void main(String[] args) {
-                new AppletFrame(new GaussElim(), 420, 90);
-        }
+	InPanel ip;
+	Panel matrixPanel;
 
-        public void init()
+	public static void main(String[] args) {
+		GaussElim frame = new GaussElim();
+		frame.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				System.exit(0);
+			}
+		});
+		frame.setVisible(true);
+	}
+
+	public GaussElim()
 	{
-                setLayout(new FlowLayout(FlowLayout.LEFT));
-                setFont(new Font("Courier",Font.BOLD,12));
-                add(new Label("rows"));
-                add(M);
-                add(new Label("cols"));
-                add(N);
-                add(new Button("Go Eliminating"));
-        }
+		setTitle("Gaussian Elimination");
+		setFont(new Font("Courier", Font.BOLD, 12));
 
-        public boolean action(Event evt, Object arg)
-        {
-                if (arg.equals("Go Eliminating")) {
-                        m = Integer.valueOf(M.getText()).intValue();
-                        n = Integer.valueOf(N.getText()).intValue();
-                        pf = new PivotFrame(m,n);
-                        pf.show();
-                } else {
-                        return super.action(evt, arg);
-                }
-                return true;
-        }
+		// Top panel with controls
+		Panel p1 = new Panel(new FlowLayout(FlowLayout.LEFT));
+		p1.setFont(new Font("Helvetica", Font.BOLD, 10));
+		p1.add(new Label("Rows:"));
+		p1.add(M);
+		p1.add(new Label("Cols:"));
+		p1.add(N);
 
-        public boolean handleEvent(Event evt)
-        {
-                if (evt.id == Event.WINDOW_DESTROY) System.exit(0);
-                return super.handleEvent(evt);
-        }
-}
-
-class PivotFrame extends Frame
-{
-	int m, n;
-
-	InPanel   ip;
-
-        Choice fmt;
-
-	public PivotFrame(int rows, int cols)
-	{
-		m = rows;
-		n = cols;
-
-		ip = new InPanel(m,n);
-
+		Button bResize = new Button("Resize");
 		Button b1 = new Button("Generate Random Problem");
 		Button b4 = new Button("Reset");
-		Button b3 = new Button("Exit");
 		Button b5 = new Button("Decimal");
 		Button b6 = new Button("Fraction");
 
-		Panel p1 = new Panel();
-		p1.setFont(new Font("Helvetica",Font.BOLD,10));
+		p1.add(bResize);
 		p1.add(b1);
 		p1.add(b4);
-		p1.add(b3);
-                p1.add(b5);
-                p1.add(b6);
+		p1.add(b5);
+		p1.add(b6);
 
-		setLayout(new BorderLayout(10,10));
-		add("North",p1);
-		add("Center",ip);
+		// Matrix panel
+		matrixPanel = new Panel(new BorderLayout());
+		ip = new InPanel(m, n);
+		matrixPanel.add(ip, BorderLayout.CENTER);
 
-		resize(500, 300);
-	}
+		setLayout(new BorderLayout(10, 10));
+		add(p1, BorderLayout.NORTH);
+		add(matrixPanel, BorderLayout.CENTER);
 
-	public boolean action(Event evt, Object arg)
-	{
-		int i, j;
-
-		if (arg.equals("Exit")) {
-			dispose();
-		}
-		else if (arg.equals("Reset")) {
-			ip.reset();
-		}
-		else if (arg.equals("Generate Random Problem")) {
-			ip.genrand();
-		}
-		else if (arg.equals("Decimal")) {
+		// Add action listeners
+		bResize.addActionListener(e -> resizeMatrix());
+		b1.addActionListener(e -> ip.genrand());
+		b4.addActionListener(e -> ip.reset());
+		b5.addActionListener(e -> {
 			ip.setFmt("Decimal");
-                        ip.toGrid();
-		}
-		else if (arg.equals("Fraction")) {
+			ip.toGrid();
+		});
+		b6.addActionListener(e -> {
 			ip.setFmt("Fraction");
-                        ip.toGrid();
-		}
-		else return super.action(evt,arg);
-		return true;
+			ip.toGrid();
+		});
+
+		setSize(700, 350);
 	}
 
-	public boolean handleEvent(Event evt)
+	void resizeMatrix()
 	{
-		return super.handleEvent(evt);
+		int newM = Integer.valueOf(M.getText()).intValue();
+		int newN = Integer.valueOf(N.getText()).intValue();
+		if (newM > 0 && newN > 0 && (newM != m || newN != n)) {
+			m = newM;
+			n = newN;
+			matrixPanel.removeAll();
+			ip = new InPanel(m, n);
+			matrixPanel.add(ip, BorderLayout.CENTER);
+			matrixPanel.revalidate();
+			matrixPanel.repaint();
+			pack();
+			setSize(Math.max(700, getWidth()), Math.max(350, getHeight()));
+		}
 	}
 }
 
