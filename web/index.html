@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Gaussian Elimination</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <main>
+    <header>
+      <p class="eyebrow"><a href="https://pubino.github.io/vanderbei-apps/#gauss-sim">Vanderbei’s applications</a> · Princeton University</p>
+      <h1>Gaussian Elimination</h1>
+      <p class="intro">Edit an augmented matrix and work through elimination one row operation at a time. Enter decimals or fractions such as <code>3/4</code>.</p>
+    </header>
+
+    <section class="panel" aria-labelledby="matrix-title">
+      <h2 id="matrix-title">Augmented matrix</h2>
+      <form id="settings">
+        <fieldset id="controls" disabled>
+          <legend class="sr-only">Matrix setup</legend>
+          <div class="toolbar">
+            <label>Rows<input id="rows" type="number" min="1" max="12" step="1" value="3" required></label>
+            <label>Columns<input id="columns" type="number" min="1" max="12" step="1" value="3" required></label>
+            <button class="secondary">Resize</button>
+            <button id="generate" type="button">Generate problem</button>
+            <button id="clear" type="button" class="secondary">Clear matrix</button>
+          </div>
+          <div class="toolbar secondary-toolbar">
+            <label>First row<select id="first"></select></label>
+            <label>Second row<select id="second"></select></label>
+            <button id="swap" type="button" class="secondary">Swap rows</button>
+            <label>Display
+              <select id="format">
+                <option value="decimal">Decimal</option>
+                <option value="fraction">Fraction</option>
+              </select>
+            </label>
+          </div>
+        </fieldset>
+      </form>
+      <p class="hint">Divide scales a row by its diagonal pivot. Eliminate subtracts a multiple of that column’s pivot row.</p>
+      <p id="status" class="hint" role="status">Loading the Python engine…</p>
+      <p id="error" role="alert" hidden></p>
+      <button id="retry" type="button" class="secondary" hidden>Reload</button>
+      <fieldset id="matrix-controls" disabled>
+        <legend class="sr-only">Matrix cells and row operations</legend>
+        <div class="matrix-wrap" role="region" tabindex="0" aria-label="Scrollable matrix">
+          <table id="matrix" aria-label="Coefficients and results"></table>
+        </div>
+      </fieldset>
+    </section>
+
+    <footer>
+      <p>Based on Robert Vanderbei’s original Java application. Python runs in your browser via
+        <a href="https://pyodide.org/">Pyodide</a>. <a href="https://github.com/pubino/gauss-sim">Source on GitHub</a>.</p>
+    </footer>
+  </main>
+</body>
+</html>

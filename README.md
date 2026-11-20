@@ -1,5 +1,13 @@
 # Gaussian Elimination Simulator
 
+[Run in your browser](https://pubino.github.io/gauss-sim/).
+
+Enter decimals or fractions, generate a random problem, and work through the
+augmented matrix one row at a time. Divide and Eliminate use the Java app's
+diagonal pivots and its near-zero cutoff. Fraction display leaves the stored
+floating-point coefficients intact. The browser accepts up to 12 rows and
+12 coefficient columns. The Linux parity tests use Xvfb to drive the Java controls.
+
 Part of [Prof. Robert Vanderbei's Java Applications](https://pubino.github.io/vanderbei-apps#gauss-sim).
 
 An interactive Java application for learning and practicing Gaussian elimination. Originally by Professor Robert Vanderbei, Princeton University (1997).
@@ -112,3 +120,21 @@ Gaussian elimination transforms a system Ax = b into row echelon form:
 - **Pink cells**: Diagonal elements (pivot positions)
 - **Variable buttons** (x1, x2, ...): Click to perform row operations
 - **Checkboxes**: Select rows for swapping
+
+## Browser development
+
+Preview with Docker or Python 3.13 and uv.
+
+```sh
+docker-compose up --build preview
+uv sync --locked
+uv run python scripts/build_site.py
+uv run python -m http.server 8000 --bind 127.0.0.1 --directory build/site
+```
+
+Run the Java parity, Chromium, lint, and type checks used in CI.
+
+```sh
+docker-compose run --build --rm -T js-check
+docker-compose run --build --rm -T test
+```
