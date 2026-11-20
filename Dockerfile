@@ -20,7 +20,9 @@ WORKDIR /workspace
 ENV PATH="/workspace/.venv/bin:/opt/java/openjdk/bin:${PATH}" \
     PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
 COPY pyproject.toml uv.lock ./
-RUN uv sync --locked --python 3.13.12 \
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends libxtst6 xvfb \
+    && uv sync --locked --python 3.13.12 \
     && playwright install --with-deps --only-shell chromium \
     && rm -rf /var/lib/apt/lists/*
 COPY web web
